@@ -20,6 +20,7 @@ defaults:
     shell: 'bash'
 
 jobs:
+<<<<<<< HEAD
 
   main:
     runs-on: ubuntu-latest
@@ -63,10 +64,20 @@ jobs:
       matrix:
         os: [ windows-latest, ubuntu-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
+=======
+  e2e:
+    strategy:
+      matrix:
+        os: [ windows-latest ]
+
+    runs-on: ${{ matrix.os }}
+
+>>>>>>> 85d452c (Initial commit)
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
+<<<<<<< HEAD
           node-version: 16
           cache: 'npm'
       - run: npm ci
@@ -77,3 +88,13 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
       - run: npm run test:e2e
         if: matrix.os != 'ubuntu-latest'
+=======
+          node-version: 16 # Need for npm >=7.7
+          cache: 'npm'
+
+      # TODO: Install not all dependencies, but only those required for this workflow
+      - name: Install dependencies
+        run: npm ci
+
+      - run: npm test
+>>>>>>> 85d452c (Initial commit)

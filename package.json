@@ -2,61 +2,55 @@
   "name": "vite-electron-builder",
   "private": true,
   "engines": {
-    "node": ">=v16.13",
-    "npm": ">=8.1"
+    "node": ">=v14.16",
+    "npm": ">=7.7"
   },
   "main": "packages/main/dist/index.cjs",
   "scripts": {
-    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
-    "build:main": "cd ./packages/main && vite build",
-    "build:preload": "cd ./packages/preload && vite build",
-    "build:renderer": "cd ./packages/renderer && vite build",
-    "compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
-    "test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
-    "test:e2e": "npm run build && vitest run",
-    "test:main": "vitest run -r packages/main --passWithNoTests",
-    "test:preload": "vitest run -r packages/preload --passWithNoTests",
-    "test:renderer": "vitest run -r packages/renderer --passWithNoTests",
+    "buildEnvTypes": "node scripts/buildEnvTypes.js",
+    "build": "node scripts/build.js",
+    "precompile": "cross-env MODE=production npm run build",
+    "compile": "electron-builder build --config electron-builder.config.js --dir --config.asar=false",
+    "pretest": "cross-env MODE=test npm run build",
+    "test": "node tests/app.spec.js",
     "watch": "node scripts/watch.js",
     "lint": "eslint . --ext js,ts,vue",
-    "typecheck:main": "tsc --noEmit -p packages/main/tsconfig.json",
-    "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
-    "typecheck:renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
-    "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer"
+    "pretypecheck": "npm run buildEnvTypes",
+    "typecheck-main": "tsc --noEmit -p packages/main/tsconfig.json",
+    "typecheck-preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+    "typecheck-renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
+    "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer"
+  },
+  "browserslist": [
+    "Chrome 91"
+  ],
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "pre-push": "npm run typecheck"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --cache --fix"
   },
   "devDependencies": {
-    "@types/react": "^18.0.8",
-    "@types/react-dom": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.21.0",
-    "@vue/test-utils": "2.0.0-rc.18",
-    "babel": "^6.23.0",
-    "cross-env": "7.0.3",
-    "electron": "17.1.0",
-    "electron-builder": "22.14.13",
-    "electron-devtools-installer": "3.2.0",
-    "eslint": "^8.9.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "happy-dom": "2.41.0",
-    "nano-staged": "0.6.0",
-    "playwright": "1.19.1",
-    "prettier": "^2.6.2",
-    "simple-git-hooks": "2.7.0",
-    "typescript": "4.5.5",
-    "vite": "2.8.4",
-    "vitest": "0.5.4"
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@vitejs/plugin-vue": "^1.4.0",
+    "cross-env": "^7.0.3",
+    "electron": "^13.1.9",
+    "electron-builder": "^22.11.7",
+    "electron-devtools-installer": "^3.2.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^7.16.0",
+    "lint-staged": "^11.1.2",
+    "simple-git-hooks": "^2.5.1",
+    "spectron": "^15.0.0",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.4",
+    "vue-tsc": "^0.2.2"
   },
   "dependencies": {
-    "-": "^0.0.1",
-    "@codemirror/commands": "^0.20.0",
-    "@codemirror/gutter": "^0.19.9",
-    "@codemirror/highlight": "^0.19.8",
-    "@codemirror/lang-javascript": "^0.20.0",
-    "@codemirror/matchbrackets": "^0.19.4",
-    "@codemirror/state": "^0.20.0",
-    "electron-updater": "4.6.5",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "electron-updater": "^4.4.4",
+    "vue": "^3.2.2",
+    "vue-router": "^4.0.11"
   }
 }

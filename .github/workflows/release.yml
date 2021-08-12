@@ -27,7 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release-note: ${{ steps.release-note.outputs.release-note }}
+<<<<<<< HEAD
       version: ${{ steps.version.outputs.build-version }}
+=======
+>>>>>>> 85d452c (Initial commit)
 
     steps:
       - uses: actions/checkout@v2
@@ -53,7 +56,11 @@ jobs:
 
       - name: Get version from current date
         id: version
+<<<<<<< HEAD
         run: echo "::set-output name=build-version::$(node -e "try{console.log(require('./.electron-builder.config.js').extraMetadata.version)}catch(e){console.error(e);process.exit(1)}")"
+=======
+        run: echo "::set-output name=current-version::$(node -e "try{console.log(require('./electron-builder.config.js').extraMetadata.version)}catch(e){console.error(e);process.exit(1)}")"
+>>>>>>> 85d452c (Initial commit)
 
 
       - name: Waiting on All checks
@@ -111,11 +118,17 @@ jobs:
       # Compile app and upload artifacts
       - name: Compile & release Electron app
         uses: samuelmeuli/action-electron-builder@v1
+<<<<<<< HEAD
         env:
           VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
         with:
           build_script_name: build
           args: --config .electron-builder.config.js
+=======
+        with:
+          build_script_name: build
+          args: --config electron-builder.config.js
+>>>>>>> 85d452c (Initial commit)
 
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)

@@ -3,6 +3,10 @@ node_modules
 dist
 *.local
 thumbs.db
+<<<<<<< HEAD
+=======
+types/env.d.ts
+>>>>>>> 85d452c (Initial commit)
 
 .eslintcache
 
