@@ -7,6 +7,7 @@
   },
   "extends": [
     "eslint:recommended",
+<<<<<<< HEAD
     /** @see https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#recommended-configs */
 <<<<<<< HEAD
     "plugin:@typescript-eslint/recommended",
@@ -14,6 +15,10 @@
 =======
     "plugin:@typescript-eslint/recommended"
 >>>>>>> 85d452c (Initial commit)
+=======
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+>>>>>>> 061ec90 (feat(*): use React instead of Vue)
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -34,6 +39,7 @@
   "rules": {
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-var-requires": "off",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "@typescript-eslint/consistent-type-imports": "error"
 =======
@@ -62,5 +68,8 @@
       "warn", "single"
     ]
 >>>>>>> 85d452c (Initial commit)
+=======
+    "@typescript-eslint/consistent-type-imports": "error"
+>>>>>>> 061ec90 (feat(*): use React instead of Vue)
   }
 }
